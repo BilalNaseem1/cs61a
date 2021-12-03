@@ -42,7 +42,20 @@ def largest_factor(n):
     1
     """
     "*** YOUR CODE HERE ***"
-
+    
+    if not isinstance(n, int) or n <= 1:
+        return 0;
+    
+    #find the smallest, divide n with the smallest => largest
+    if n % 2 == 0:
+        return n // 2
+    
+    for i in range(3, n//2, 2):
+        if n % i == 0:
+            return n // i
+        elif i == n//2 - 1: #last iteration - it's a prime
+            return 1
+            
 def if_function(condition, true_result, false_result):
     """Return true_result if condition is a true value, and
     false_result otherwise.
