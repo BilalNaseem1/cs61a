@@ -99,12 +99,15 @@ def with_if_function():
 
 def c():
     "*** YOUR CODE HERE ***"
+    return False
 
 def t():
     "*** YOUR CODE HERE ***"
+    print(1)
 
 def f():
     "*** YOUR CODE HERE ***"
+    print(2)
 
 def hailstone(n):
     """Print the hailstone sequence starting at n and return its
