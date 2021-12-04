@@ -44,7 +44,7 @@ def largest_factor(n):
     "*** YOUR CODE HERE ***"
     
     if not isinstance(n, int) or n <= 1:
-        return 0;
+        return 0
     
     #find the smallest, divide n with the smallest => largest
     if n % 2 == 0:
@@ -125,3 +125,21 @@ def hailstone(n):
     7
     """
     "*** YOUR CODE HERE ***"
+    
+    if not isinstance(n, int) or n < 1:
+        return 0
+    
+    steps = 1 
+    
+    while n != 1:
+        print(n)
+        if n % 2 == 0:
+            n //= 2
+        else:
+            n = n * 3 + 1
+            
+        steps += 1
+    
+    print(n)
+    return steps
+    
