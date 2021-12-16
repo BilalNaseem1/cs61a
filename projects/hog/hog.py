@@ -151,23 +151,19 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
         return score0 >= goal_score  or score1 >= goal_score
 
     while not is_game_over(score0, score1, goal):
- 
-        p0_num_rolls = strategy0(score0, score1)
-        p1_num_rolls = strategy1(score1, score0)
+        if (player == 0):
+            num_rolls = strategy0(score0, score1)
+            score0 += take_turn(num_rolls, score1, dice)
+            score0, score1 = swine_swap(score0, score1)
+            player = 1
+        else:
+            num_rolls = strategy1(score1, score0)
+            score1 += take_turn(num_rolls, score0, dice)
+            score1, score0 = swine_swap(score1, score0)
+            player = 0
 
-        score0 += take_turn(p0_num_rolls, score1, dice)
-        score0, score1 = swine_swap(score0, score1)
-
-        print("DEBUG:", score0, score1)
-        if (is_game_over(score0, score1, goal)):
-            break;
-
-        score1 += take_turn(p1_num_rolls, score0, dice)
-        score1, score0 = swine_swap(score1, score0)
 
         print("DEBUG:", score0, score1)
-        if (is_game_over(score0, score1, goal)):
-            break;
 
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
