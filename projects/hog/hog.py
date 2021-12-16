@@ -51,6 +51,18 @@ def free_bacon(score):
     assert score < 100, 'The game should be over.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    FREE_POINTS_MAX = 10
+    if score <= FREE_POINTS_MAX:
+        return FREE_POINTS_MAX
+    
+    digits = str(score)
+    first_digit = digits[0] 
+    second_digit = digits[1]
+
+    if int(first_digit) < int(second_digit):
+        return FREE_POINTS_MAX - int(first_digit)
+    else:
+        return FREE_POINTS_MAX - int(second_digit)
     # END PROBLEM 2
 
 
