@@ -142,28 +142,43 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    def is_game_over(score0, score1, goal_score):
+        return score0 >= goal_score  or score1 >= goal_score
+
     def swine_swap(curr_player_score, other_player_score):
         if (is_swap(curr_player_score, other_player_score)):
             curr_player_score, other_player_score = other_player_score, curr_player_score 
         return curr_player_score, other_player_score 
 
-    def is_game_over(score0, score1, goal_score):
-        return score0 >= goal_score  or score1 >= goal_score
-
-    while not is_game_over(score0, score1, goal):
+    def get_current_strategy(strategy0, strategy1, player=0):
         if (player == 0):
-            num_rolls = strategy0(score0, score1)
-            score0 += take_turn(num_rolls, score1, dice)
-            score0, score1 = swine_swap(score0, score1)
-            player = 1
+            return strategy0
         else:
-            num_rolls = strategy1(score1, score0)
+            return strategy1
+
+    def get_num_rolls(score0, score1, player, current_strategy): 
+        if (player == 0):
+            return current_strategy(score0, score1) 
+        else:
+            return current_strategy(score1, score0)
+    
+
+    def set_scores(num_rolls, score0, score1, player):
+        if (player == 0):
+            score0 += take_turn(num_rolls, score1, dice) 
+            score0, score1 = swine_swap(score0, score1)
+        else:
             score1 += take_turn(num_rolls, score0, dice)
             score1, score0 = swine_swap(score1, score0)
-            player = 0
 
+        return score0, score1
 
-        print("DEBUG:", score0, score1)
+    while not is_game_over(score0, score1, goal):
+        current_strategy = get_current_strategy(strategy0, strategy1, player)
+        num_rolls        = get_num_rolls(score0, score1, player, current_strategy)
+        score0, score1   = set_scores(num_rolls, score0, score1, player)
+        player           = other(player)
+
 
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
