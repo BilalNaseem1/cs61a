@@ -96,6 +96,14 @@ def is_swap(player_score, opponent_score):
     """
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    def calculate_rmd(score):
+       digits = str(score)
+       return int(digits[len(digits) -1])
+
+    lmd_player = int(str(player_score)[0])
+    rmd_oponent = calculate_rmd(opponent_score) 
+
+    return lmd_player == rmd_oponent
     # END PROBLEM 4
 
 
