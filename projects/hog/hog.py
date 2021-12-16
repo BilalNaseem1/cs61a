@@ -4,7 +4,7 @@ from dice import six_sided, four_sided, make_test_dice
 from ucb import main, trace, interact
 
 GOAL_SCORE = 100  # The goal of Hog is to score 100 points.
-
+FREE_BACON_ROLLS = 0
 ######################
 # Phase 1: Simulator #
 ######################
@@ -81,7 +81,6 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
-    FREE_BACON_ROLLS = 0
 
     if num_rolls == FREE_BACON_ROLLS:
         return free_bacon(opponent_score)
@@ -143,6 +142,33 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    def swine_swap(curr_player_score, other_player_score):
+        if (is_swap(curr_player_score, other_player_score)):
+            curr_player_score, other_player_score = other_player_score, curr_player_score 
+        return curr_player_score, other_player_score 
+
+    def is_game_over(score0, score1, goal_score):
+        return score0 >= goal_score  or score1 >= goal_score
+
+    while not is_game_over(score0, score1, goal):
+ 
+        p0_num_rolls = strategy0(score0, score1)
+        p1_num_rolls = strategy1(score1, score0)
+
+        score0 += take_turn(p0_num_rolls, score1, dice)
+        score0, score1 = swine_swap(score0, score1)
+
+        print("DEBUG:", score0, score1)
+        if (is_game_over(score0, score1, goal)):
+            break;
+
+        score1 += take_turn(p1_num_rolls, score0, dice)
+        score1, score0 = swine_swap(score1, score0)
+
+        print("DEBUG:", score0, score1)
+        if (is_game_over(score0, score1, goal)):
+            break;
+
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
