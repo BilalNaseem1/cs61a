@@ -105,7 +105,6 @@ def is_swap(player_score, opponent_score):
     return lmd_player == rmd_oponent
     # END PROBLEM 4
 
-
 def other(player):
     """Return the other player, for a player PLAYER numbered 0 or 1.
 
@@ -203,6 +202,32 @@ def announce_highest(who, previous_high=0, previous_score=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+
+    is_p0 = who ==0
+
+
+    def say(score0, score1):
+        current_high    = previous_high
+
+        if is_p0:
+            score0_gain = score0 - previous_score
+            current_score = score0
+
+        else:
+            score1_gain =  score1 - previous_score
+            current_score = score1
+
+        if is_p0 and score0_gain > previous_high:
+            current_high = score0_gain
+            print('{current_high} point(s)! That\'s the biggest gain yet for Player {player_id}'.format(current_high = current_high, player_id = who))
+
+        if not is_p0 and score1_gain > previous_high:
+            current_high = score1_gain
+            print('{current_high} point(s)! That\'s the biggest gain yet for Player {player_id}'.format(current_high = current_high, player_id = who))
+        
+        return announce_highest(who, current_high, current_score)
+    
+    return say
     # END PROBLEM 7
 
 def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
@@ -228,10 +253,6 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     def is_game_over(score0, score1, goal_score):
         return score0 >= goal_score  or score1 >= goal_score
 
-    def swine_swap(curr_player_score, other_player_score):
-        if (is_swap(curr_player_score, other_player_score)):
-            curr_player_score, other_player_score = other_player_score, curr_player_score 
-        return curr_player_score, other_player_score 
 
     def get_current_strategy(strategy0, strategy1, player=0):
         if (player == 0):
@@ -245,6 +266,11 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
         else:
             return current_strategy(score1, score0)
     
+
+    def swine_swap(curr_player_score, other_player_score):
+        if (is_swap(curr_player_score, other_player_score)):
+            curr_player_score, other_player_score = other_player_score, curr_player_score 
+        return curr_player_score, other_player_score 
 
     def set_scores(num_rolls, score0, score1, player):
         if (player == 0):
