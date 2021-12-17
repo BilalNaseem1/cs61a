@@ -328,6 +328,13 @@ def make_averaged(fn, num_samples=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def averaged(*args):
+        result = 0;
+
+        for i in range(0, num_samples):
+            result = result + fn(*args)
+        return result / num_samples
+    return averaged
     # END PROBLEM 8
 
 
