@@ -121,73 +121,6 @@ def silence(score0, score1):
     """Announce nothing (see Phase 2)."""
     return silence
 
-
-def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
-         goal=GOAL_SCORE, say=silence):
-    """Simulate a game and return the final scores of both players, with Player
-    0's score first, and Player 1's score second.
-
-    A strategy is a function that takes two total scores as arguments (the
-    current player's score, and the opponent's score), and returns a number of
-    dice that the current player will roll this turn.
-
-    strategy0:  The strategy function for Player 0, who plays first.
-    strategy1:  The strategy function for Player 1, who plays second.
-    score0:     Starting score for Player 0
-    score1:     Starting score for Player 1
-    dice:       A function of zero arguments that simulates a dice roll.
-    goal:       The game ends and someone wins when this score is reached.
-    say:        The commentary function to call at the end of the first turn.
-    """
-    player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
-    # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
-    def is_game_over(score0, score1, goal_score):
-        return score0 >= goal_score  or score1 >= goal_score
-
-    def swine_swap(curr_player_score, other_player_score):
-        if (is_swap(curr_player_score, other_player_score)):
-            curr_player_score, other_player_score = other_player_score, curr_player_score 
-        return curr_player_score, other_player_score 
-
-    def get_current_strategy(strategy0, strategy1, player=0):
-        if (player == 0):
-            return strategy0
-        else:
-            return strategy1
-
-    def get_num_rolls(score0, score1, player, current_strategy): 
-        if (player == 0):
-            return current_strategy(score0, score1) 
-        else:
-            return current_strategy(score1, score0)
-    
-
-    def set_scores(num_rolls, score0, score1, player):
-        if (player == 0):
-            score0 += take_turn(num_rolls, score1, dice) 
-            score0, score1 = swine_swap(score0, score1)
-        else:
-            score1 += take_turn(num_rolls, score0, dice)
-            score1, score0 = swine_swap(score1, score0)
-
-        return score0, score1
-
-    while not is_game_over(score0, score1, goal):
-        current_strategy = get_current_strategy(strategy0, strategy1, player)
-        num_rolls        = get_num_rolls(score0, score1, player, current_strategy)
-        score0, score1   = set_scores(num_rolls, score0, score1, player)
-        player           = other(player)
-
-
-    # END PROBLEM 5
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 6
-    return score0, score1
-
-
 #######################
 # Phase 2: Commentary #
 #######################
@@ -271,6 +204,75 @@ def announce_highest(who, previous_high=0, previous_score=0):
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
     # END PROBLEM 7
+
+def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
+         goal=GOAL_SCORE, say=silence):
+    """Simulate a game and return the final scores of both players, with Player
+    0's score first, and Player 1's score second.
+
+    A strategy is a function that takes two total scores as arguments (the
+    current player's score, and the opponent's score), and returns a number of
+    dice that the current player will roll this turn.
+
+    strategy0:  The strategy function for Player 0, who plays first.
+    strategy1:  The strategy function for Player 1, who plays second.
+    score0:     Starting score for Player 0
+    score1:     Starting score for Player 1
+    dice:       A function of zero arguments that simulates a dice roll.
+    goal:       The game ends and someone wins when this score is reached.
+    say:        The commentary function to call at the end of the first turn.
+    """
+    player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
+    # BEGIN PROBLEM 5
+    "*** YOUR CODE HERE ***"
+    def is_game_over(score0, score1, goal_score):
+        return score0 >= goal_score  or score1 >= goal_score
+
+    def swine_swap(curr_player_score, other_player_score):
+        if (is_swap(curr_player_score, other_player_score)):
+            curr_player_score, other_player_score = other_player_score, curr_player_score 
+        return curr_player_score, other_player_score 
+
+    def get_current_strategy(strategy0, strategy1, player=0):
+        if (player == 0):
+            return strategy0
+        else:
+            return strategy1
+
+    def get_num_rolls(score0, score1, player, current_strategy): 
+        if (player == 0):
+            return current_strategy(score0, score1) 
+        else:
+            return current_strategy(score1, score0)
+    
+
+    def set_scores(num_rolls, score0, score1, player):
+        if (player == 0):
+            score0 += take_turn(num_rolls, score1, dice) 
+            score0, score1 = swine_swap(score0, score1)
+        else:
+            score1 += take_turn(num_rolls, score0, dice)
+            score1, score0 = swine_swap(score1, score0)
+
+        return score0, score1
+    
+    commentary = say
+    while not is_game_over(score0, score1, goal):
+        current_strategy = get_current_strategy(strategy0, strategy1, player)
+        num_rolls        = get_num_rolls(score0, score1, player, current_strategy)
+        score0, score1   = set_scores(num_rolls, score0, score1, player)
+        player           = other(player)
+
+        commentary = commentary(score0, score1) 
+
+        # END PROBLEM 5
+        # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
+        # BEGIN PROBLEM 6
+        "*** YOUR CODE HERE ***"
+        # END PROBLEM 6
+    return score0, score1
+
+
 
 
 #######################
