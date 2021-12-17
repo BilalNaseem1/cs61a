@@ -207,24 +207,15 @@ def announce_highest(who, previous_high=0, previous_score=0):
 
 
     def say(score0, score1):
-        current_high    = previous_high
+        say_phrase = lambda current_high, who: print('{current_high} point(s)! That\'s the biggest gain yet for Player {player_id}'.format(current_high = current_high, player_id = who))
+        current_score = score0 if is_p0 else score1
+        score_gain = current_score - previous_score
+        is_new_highest = score_gain > previous_high
+        current_high = score_gain if is_new_highest else previous_high
 
-        if is_p0:
-            score0_gain = score0 - previous_score
-            current_score = score0
+        if is_new_highest:
+            say_phrase(current_high, who)
 
-        else:
-            score1_gain =  score1 - previous_score
-            current_score = score1
-
-        if is_p0 and score0_gain > previous_high:
-            current_high = score0_gain
-            print('{current_high} point(s)! That\'s the biggest gain yet for Player {player_id}'.format(current_high = current_high, player_id = who))
-
-        if not is_p0 and score1_gain > previous_high:
-            current_high = score1_gain
-            print('{current_high} point(s)! That\'s the biggest gain yet for Player {player_id}'.format(current_high = current_high, player_id = who))
-        
         return announce_highest(who, current_high, current_score)
     
     return say
