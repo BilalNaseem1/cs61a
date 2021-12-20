@@ -21,7 +21,7 @@ def skip_add(n):
 
 this_file = __file__
 
-def hailstone(n):
+def hailstone(n, count=0):
     """Print out the hailstone sequence starting at n, and return the
     number of elements in the sequence.
 
@@ -42,6 +42,13 @@ def hailstone(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    print(n)
+    if n == 1:
+        return count + 1
+    elif n % 2 == 0:
+        return hailstone(n//2, count + 1)
+    else:
+        return hailstone(n*3 + 1, count + 1)
 
 def summation(n, term):
 
