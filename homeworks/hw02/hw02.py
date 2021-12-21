@@ -138,6 +138,14 @@ def make_repeater(f, n):
     5
     """
     "*** YOUR CODE HERE ***"
+    def repeated_f(x, n=n):
+        if n == 0:
+            return x
+        else:
+            return repeated_f(f(x), n - 1)
+    
+    return repeated_f
+        
 
 def num_sevens(n):
     """Returns the number of times 7 appears as a digit of n.
