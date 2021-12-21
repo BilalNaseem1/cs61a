@@ -168,6 +168,15 @@ def num_sevens(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    #could be an ugly one-liner with bool to int conversion, but I prefer it this way :)
+    if n < 10 and n == 7:
+        return 1
+    elif n < 10:
+        return 0
+    elif n % 10 == 7:    
+        return 1 + num_sevens(n // 10)
+    else:
+        return 0 + num_sevens(n // 10)
 
 def pingpong(n):
     """Return the nth element of the ping-pong sequence.
