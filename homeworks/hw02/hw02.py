@@ -210,6 +210,34 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def should_switch_direction(digit, curr_count):
+        return (digit % 10 == 7 or digit == 7) or (curr_count % 10 == 7 or curr_count % 7 == 0 or num_sevens(curr_count) > 0)
+    
+    def increment(element):
+        return element + 1
+    
+    def decrement(element):
+        return element - 1
+    
+    def switch_direction(direction_up):
+        return not direction_up
+    
+    def count_to_n(n, curr_count = 1, element=1, direction_up = True):
+        if curr_count == n:
+            return element
+        elif should_switch_direction(element, curr_count):
+            if (direction_up):
+                #previous direction was up, but now it's changing, so we need to decrement the "element" and switch direction
+                return count_to_n(n, increment(curr_count), decrement(element), switch_direction(direction_up))
+            else:
+                #previous direction was down, but now it's changing to up, so we need to increment the "element"
+                return count_to_n(n, increment(curr_count), increment(element), switch_direction(direction_up))
+        else:
+            return count_to_n(n, increment(curr_count), increment(element) if direction_up else decrement(element), direction_up)
+
+    
+    return count_to_n(n)
+        
 
 def count_change(amount):
     """Return the number of ways to make change for amount.
