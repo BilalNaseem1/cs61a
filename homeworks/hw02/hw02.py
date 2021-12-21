@@ -77,6 +77,13 @@ def accumulate(combiner, base, n, term):
     19
     """
     "*** YOUR CODE HERE ***"
+    if n == 0:
+        return base
+    else:
+        return combiner(term(n), accumulate(combiner, base, n - 1, term))
+        
+        
+        
 
 def summation_using_accumulate(n, term):
     """Returns the sum of term(1) + ... + term(n). The implementation
