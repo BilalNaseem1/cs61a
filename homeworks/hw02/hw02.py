@@ -37,6 +37,11 @@ def product(n, term):
     True
     """
     "*** YOUR CODE HERE ***"
+    product_of_term = 1
+    for i in range(1, n + 1):
+        product_of_term *= term(i)
+    
+    return product_of_term
 
 def factorial(n):
     """Return n factorial for n >= 0 by calling product.
@@ -50,6 +55,8 @@ def factorial(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    return product(n, lambda i: i)
+    
 
 def accumulate(combiner, base, n, term):
     """Return the result of combining the first n terms in a sequence and base.
