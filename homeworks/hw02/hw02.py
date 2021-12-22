@@ -235,8 +235,6 @@ def pingpong(n):
         else:
             return count_to_n(n, increment(curr_count), increment(element) if direction_up else decrement(element), direction_up)
 
-    
-    return count_to_n(n)
         
 
 def count_change(amount):
@@ -255,7 +253,29 @@ def count_change(amount):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    def find_highest_coin(amount, coin = 1, highest = 1):
+        if coin <= amount:
+            #coins are power of two, we start with 1 and go on
+            return find_highest_coin(amount, coin * 2, highest=coin)
+        return highest
+    
+    #inspired by composing programs, chapter 1.7 and edited the return statement
+    def count_partitions(n, m):
+        """Count the ways to partition n using parts up to m."""
+        if n == 0:
+            return 1
+        elif n < 0:
+            return 0
+        elif m == 0:
+            return 0
+        else:
+            return count_partitions(n-m, m) + count_partitions(n, m//2)
+    
+    highest_coin = find_highest_coin(amount)
+    
+    return count_partitions(amount, highest_coin)
+    
+    
 
 
 ###################

@@ -6,3 +6,4 @@
 'make_repeater-correct', (2560, 70)
 'num_sevens-correct', (3072, 70)
 'pingpong-correct', (3584, 70)
+'count_change-correct', (4096, 70)
