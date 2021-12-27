@@ -46,6 +46,18 @@ def distance(city1, city2):
     5.0
     """
     "*** YOUR CODE HERE ***"
+    sub_pow_coord = lambda coord1, coord2: pow((coord1 - coord2), 2)
+    
+    return sqrt(sub_pow_coord(
+        get_lat(city1),
+        get_lat(city2))
+                +
+                sub_pow_coord(
+        get_lon(city1),
+        get_lon(city2))
+               )
+                
+                              
 
 def closer_city(lat, lon, city1, city2):
     """
