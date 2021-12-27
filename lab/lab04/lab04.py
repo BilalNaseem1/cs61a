@@ -74,6 +74,9 @@ def closer_city(lat, lon, city1, city2):
     'Bucharest'
     """
     "*** YOUR CODE HERE ***"
+    coords = make_city('coords', lat, lon)
+        
+    return get_name(city1) if distance(city1, coords) < distance(city2, coords) else get_name(city2)
 
 def check_abstraction():
     """
