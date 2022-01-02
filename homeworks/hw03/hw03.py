@@ -92,7 +92,8 @@ def taxicab(a, b):
     >>> taxicab(ess_a_bagel, times_square)
     9
     """
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***"  
+    return abs(street(a) - street(b)) + abs(avenue(a) - avenue(b))
 
 def flatten(lst):
     """Returns a flattened version of lst.
