@@ -83,7 +83,15 @@ def acorn_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    acorn = False
+    
+    if label(t) == 'acorn':
+        return True
+    for b in branches(t):
+        acorn = acorn or acorn_finder(b)
+    return acorn      
+    
+ 
 # Tree ADT
 def tree(label, branches=[]):
     """Construct a tree with the given label value and a list of branches."""
