@@ -112,6 +112,14 @@ def flatten(lst):
     [[1, [1, 1]], 1, [1, 1]]
     """
     "*** YOUR CODE HERE ***"
+    flat_lst = []
+    
+    for item in lst:
+        if type(item) == list:
+            flat_lst += flatten(item)
+        else:
+            flat_lst += [item]
+    return flat_lst
 
 def replace_leaf(t, old, new):
     """Returns a new tree where every leaf value equal to old has
