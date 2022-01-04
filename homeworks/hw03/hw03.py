@@ -262,7 +262,20 @@ def balanced(m):
     >>> balanced(mobile(side(1, w), side(1, v)))
     False
     """
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***"              
+    def get_side_torque(side):
+        return length(side) * total_weight(end(side))
+    
+    def is_mobile_balanced(m):
+        return get_side_torque(left(m)) == get_side_torque(right(m))
+            
+    if is_mobile(m):
+        return is_mobile_balanced(m) and balanced(end(left(m))) and balanced(end(right(m)))
+    else:
+        return True
+        
+            
+
 
 def totals_tree(m):
     """Return a tree representing the mobile with its total weight at the root.
