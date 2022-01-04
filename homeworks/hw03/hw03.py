@@ -302,7 +302,19 @@ def totals_tree(m):
           3
           2
     """
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***"        
+    def construct_branch(m):
+        branch = []
+        branch += totals_tree(m) if is_mobile(m) else [size((m))]
+        
+        return branch
+    
+    tree_label = total_weight(m)
+    
+    left_branch = construct_branch(end(left(m)))
+    right_branch = construct_branch(end(right(m)))
+        
+    return tree(tree_label, [left_branch, right_branch])
 
 ###################
 # Extra Questions #
