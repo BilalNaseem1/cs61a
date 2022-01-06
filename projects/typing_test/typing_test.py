@@ -70,6 +70,30 @@ def analyze(sample_paragraph, typed_string, start_time, end_time):
     
     
     return [words_per_minute, acc_p]
+
+#q3
+def pig_latin(word):
+    VOWELS = 'aeiouAEIOU'
+    CNSNANT_SUFFIX = 'ay'
+    VOWEL_SUFFIX = 'way'
+    
+    begins_with_vowel = word[0] in VOWELS
+    
+    def translate_cnsnant_word(word):
+        cnsnant_cluster = ''
+        slice_index = 0
+        for i in range(0, len(word)):
+            if word[i] not in VOWELS:
+                cnsnant_cluster += word[i]
+                slice_index += 1
+            else:
+                break
+        return word[slice_index:] + cnsnant_cluster + CNSNANT_SUFFIX
+    
+    return word + VOWEL_SUFFIX if begins_with_vowel else translate_cnsnant_word(word)
+    
+
+
 # END Q1-5
 # Question 6
 
