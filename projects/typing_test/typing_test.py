@@ -91,8 +91,21 @@ def pig_latin(word):
         return word[slice_index:] + cnsnant_cluster + CNSNANT_SUFFIX
     
     return word + VOWEL_SUFFIX if begins_with_vowel else translate_cnsnant_word(word)
-    
 
+#q4
+def autocorrect(user_input, words_list, score_function):
+    if user_input in words_list:
+        return user_input
+    
+    score_log = {}
+    
+    for word in words_list:
+        score_key = score_function(user_input, word)
+        
+        if score_key not in score_log:
+            score_log[score_key] = word
+    
+    return score_log[min(score_log)]
 
 # END Q1-5
 # Question 6

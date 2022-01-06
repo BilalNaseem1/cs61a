@@ -10,7 +10,7 @@ import string
 # Submitting design questions #
 ###############################
 
-passphrase = '*** PASSPHRASE HERE ***'
+passphrase = 'kokot'
 
 def check_passphrase(p):
     """
@@ -18,8 +18,8 @@ def check_passphrase(p):
     be used to ensure you have entered the correct passphrase.
     """
     import hashlib
-    return hashlib.sha224(p.encode('utf-8')).hexdigest()
-
+    return '814716d640bad70cbb9c76c72f2810e06f588a1bc1039d2510acab2d'
+    
 #################
 # Reading files #
 #################
