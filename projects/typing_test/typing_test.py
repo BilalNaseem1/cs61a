@@ -5,8 +5,30 @@ from ucb import main
 
 # BEGIN Q1-5
 "*** YOUR CODE HERE ***"
-# END Q1-5
+#q1-p1
+def lines_from_file(path=''):
+    assert isinstance(path, str) and len(path) > 0
+    
+    lines = []
+    with open(path) as file:
+        for line in file:
+            lines += [strip(line)]
+    return lines
 
+#q1-p2
+def new_sample(path, line_nr):
+    assert isinstance(path, str) and len(path) > 0
+
+    sample = ''
+    
+    with open(path) as file:
+        for i, line in enumerate(file):
+            if i == line_nr:
+                sample = strip(line)
+                break
+    return sample
+
+# END Q1-5
 # Question 6
 
 def score_function(word1, word2):
