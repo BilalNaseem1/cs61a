@@ -107,6 +107,16 @@ def autocorrect(user_input, words_list, score_function):
     
     return score_log[min(score_log)]
 
+#q5
+def swap_score(word1, word2):
+    if len(word1) <= 0 or len(word2) <= 0:
+        return 0
+    else:
+        return (0 if word1[0] == word2[0] else 1) + swap_score(word1[1:], word2[1:])
+        
+
+    
+    
 # END Q1-5
 # Question 6
 
