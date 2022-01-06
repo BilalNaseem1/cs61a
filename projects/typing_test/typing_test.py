@@ -28,6 +28,48 @@ def new_sample(path, line_nr):
                 break
     return sample
 
+#q2
+def analyze(sample_paragraph, typed_string, start_time, end_time):    
+    #returns words typed per minute
+    def get_w_p_m(typed_string, start_time, end_time):
+        ONE_WORD_LENGTH = 5
+        SECONDS_IN_MINUTE = 60
+        
+        time_typing = end_time - start_time
+        #words in string
+        words_amount = len(typed_string) / ONE_WORD_LENGTH       
+        words_per_minute = SECONDS_IN_MINUTE / time_typing * words_amount
+        
+        return words_per_minute
+    
+    #returns the accuracy of typed text
+    def get_acc_p(sample_paragraph, typed_string):
+        sample_words = split(sample_paragraph)
+        amount_sample_words = len(sample_words)
+        
+        typed_words = split(typed_string)
+        amount_typed_words = len(typed_words)
+                
+        #calculate based on required words. If less then required typed, calculate based on typed amount
+        words_amount = amount_sample_words if amount_sample_words <= amount_typed_words else amount_typed_words
+        
+        def get_nr_of_matches(sample_words, typed_words, words_amount):
+            nr_of_matches = 0
+            for i in range(0, words_amount):
+                    nr_of_matches += int(sample_words[i] == typed_words[i])
+            return nr_of_matches
+        
+        nr_of_matches = get_nr_of_matches(sample_words, typed_words, words_amount)
+        
+        accuracy = 0.0 if nr_of_matches <= 0 else (nr_of_matches / words_amount) * 100
+            
+        return accuracy
+        
+    words_per_minute = get_w_p_m(typed_string, start_time, end_time)
+    acc_p = get_acc_p(sample_paragraph, typed_string)
+    
+    
+    return [words_per_minute, acc_p]
 # END Q1-5
 # Question 6
 
