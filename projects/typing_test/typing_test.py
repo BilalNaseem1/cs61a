@@ -167,4 +167,43 @@ KEY_DISTANCES = get_key_distances()
 
 # BEGIN Q7-8
 "*** YOUR CODE HERE ***"
+def score_function_accurate(word1, word2):
+    
+    add_char = lambda word1, char: char + word1
+    remove_char = lambda word1: word1[1:]
+    substitute_char = lambda word1, char: char + word1[1:]
+    
+    
+    ### index out of range cases BEGINNING
+    #traversed all of word2, word1 is longer, only remove chars
+    if len(word2) == 0 and len(word1) > 0:
+        return 1 + score_function_accurate(remove_char(word1), word2)
+    #traversed all of word2
+    elif len(word2) == 0:
+        return 0
+    #only makes sense to add chars to word1
+    elif len(word1) == 0:
+        return 1 + score_function_accurate(add_char(word1, word2[0]), word2)
+    ### index out of range cases END
+    
+    #we found a match, cut off the matching chars from both words
+    elif word1[0] == word2[0]:
+        return 0 + score_function_accurate(word1[1:], word2[1:])
+    #only makes sense to remove or sub chars in word1
+    elif len(word1) > len(word2):
+        return min(
+            [
+                1 + score_function_accurate(remove_char(word1), word2),
+                score_function_accurate(substitute_char(word1, word2[0]), word2)
+            ]
+        )
+    #try all 3 operations
+    else:
+        return min(
+            [
+                1 + score_function_accurate(add_char(word1, word2[0]), word2),
+                1 + score_function_accurate(remove_char(word1), word2),
+                KEY_DISTANCES[word1[0], word2[0]] + score_function_accurate(substitute_char(word1, word2[0]), word2)
+            ]
+        )
 # END Q7-8
