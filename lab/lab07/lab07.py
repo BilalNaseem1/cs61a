@@ -14,6 +14,16 @@ def paths(m, n):
     1
     """
     "*** YOUR CODE HERE ***"
+    if m == 0:
+        return 0
+    elif m == 1:
+        return 1
+    elif n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return paths(m - 1, n) + paths(m, n - 1)
 
 def num_trees(n):
     """How many full binary trees have exactly n leaves? E.g.,
