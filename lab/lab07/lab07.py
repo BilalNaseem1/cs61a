@@ -25,6 +25,23 @@ def paths(m, n):
     else:
         return paths(m - 1, n) + paths(m, n - 1)
 
+def build_fbt(nodes):
+    if nodes == 0:
+        return [tree('LEAF')]
+    else:
+        trees = []
+        """
+        Begins with 0 for the left and "nodes - 0 - 1(the root node)" for the right - so we start building the trees from the right side
+        """
+        for left_range in range(nodes):
+            right_range = nodes - left_range - 1
+            left_branch = build_fbt(left_range) 
+            right_branch = build_fbt(right_range)
+            for right_trees in right_branch:
+                for left_trees in left_branch:
+                    trees.append(tree('NODE', [left_trees, right_trees]))
+        return trees
+    
 def num_trees(n):
     """How many full binary trees have exactly n leaves? E.g.,
 
@@ -46,7 +63,7 @@ def num_trees(n):
 
     """
     "*** YOUR CODE HERE ***"
-
+    return len(build_fbt(n-1))
 def prune_leaves(t, vals):
     """Return a modified copy of t with all leaves that have a label
     that appears in vals removed.  Return None if the entire tree is
