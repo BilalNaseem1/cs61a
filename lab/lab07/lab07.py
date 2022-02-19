@@ -89,6 +89,24 @@ def prune_leaves(t, vals):
       6
     """
     "*** YOUR CODE HERE ***"
+    def is_leaf_to_remove(t, vals):
+        return is_leaf(t) and label(t) in vals
+    
+    #case we get a leaf as input and it's value in vals
+    if is_leaf_to_remove(t, vals):
+        return None
+            
+    if is_leaf(t):
+        return tree(label(t))
+    else:
+        new_branches = []
+        for branch in branches(t):
+            if is_leaf_to_remove(branch, vals):
+                continue
+            new_branches += [prune_leaves(branch, vals)]
+    
+        return tree(label(t), new_branches)
+    
 
 def dict_to_lst(d):
     """Returns a list containing all the (key, value) pairs in d as two-element
