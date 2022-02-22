@@ -120,10 +120,10 @@ def dict_to_lst(d):
     [('second', 'no'), ('third', 'perhaps'), ('first', 'yes')]
     """
     result = []
-    for _ in range(len(d)):
-        pair = min(d.items(), key=______________________)
-        d.pop(_________)
-        _______________________
+    for i in range(len(d)):
+        pair = min(d.items(), key=lambda x: x[1])
+        d.pop(pair[0])
+        result += (pair,)
     return result
 
 # Tree ADT
