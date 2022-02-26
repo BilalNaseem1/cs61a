@@ -4,7 +4,7 @@ import random
 
 class Card(object):
     cardtype = 'Staff'
-
+    
     def __init__(self, name, attack, defense):
         """
         Create a Card object with a name, attack,
@@ -23,6 +23,9 @@ class Card(object):
         500
         """
         "*** YOUR CODE HERE ***"
+        self.name = name
+        self.attack = attack
+        self.defense = defense
 
     def power(self, other_card):
         """
@@ -42,6 +45,7 @@ class Card(object):
         50.0
         """
         "*** YOUR CODE HERE ***"
+        return self.attack - other_card.defense / 2
 
 
     def effect(self, other_card, player, opponent):
