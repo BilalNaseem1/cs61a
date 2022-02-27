@@ -126,16 +126,35 @@ class Mint:
 
     def create(self, kind):
         "*** YOUR CODE HERE ***"
+        return kind(self.year)
+         
 
     def update(self):
         "*** YOUR CODE HERE ***"
+        self.year = self.current_year
 
 class Coin:
+    VALUE_TRESHOLD_YRS = 50
     def __init__(self, year):
         self.year = year
+        self.age = Mint.current_year - self.year 
 
     def worth(self):
         "*** YOUR CODE HERE ***"
+        if self.has_added_value():
+            return self.cents + self.get_added_value()
+        else:
+            return self.cents
+    
+    def has_added_value(self):
+        return self.get_age() > self.VALUE_TRESHOLD_YRS
+
+    def get_added_value(self):
+        return self.get_age() - self.VALUE_TRESHOLD_YRS 
+
+    def get_age(self):
+        return Mint.current_year - self.year
+
 
 class Nickel(Coin):
     cents = 5
