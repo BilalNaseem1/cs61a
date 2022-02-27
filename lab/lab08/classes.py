@@ -84,6 +84,7 @@ class Player(object):
         self.deck = deck
         self.name = name
         "*** YOUR CODE HERE ***"
+        self.hand = [self.deck.draw() for card in range(5)]
 
     def draw(self):
         """Draw a card from the player's deck and add it to their hand.
@@ -98,6 +99,7 @@ class Player(object):
         """
         assert not self.deck.is_empty(), 'Deck is empty!'
         "*** YOUR CODE HERE ***"
+        self.hand.append(self.deck.draw())
 
     def play(self, card_index):
         """Remove and return a card from the player's hand at the given index.
@@ -114,6 +116,7 @@ class Player(object):
         2
         """
         "*** YOUR CODE HERE ***"
+        return self.hand.pop(card_index)
 
 
     def display_hand(self):
