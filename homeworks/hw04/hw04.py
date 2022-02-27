@@ -18,6 +18,29 @@ def make_fib():
     12
     """
     "*** YOUR CODE HERE ***"
+    fib_nr = 0
+    prev_nr = 0
+    curr_nr = 0
+    def fib():
+        nonlocal prev_nr
+        nonlocal curr_nr
+        nonlocal fib_nr
+        if curr_nr == 0:
+            curr_nr = 1
+            return fib_nr
+
+        elif fib_nr == 0:
+            fib_nr = 1
+            return fib_nr
+
+        fib_nr = prev_nr + curr_nr
+        prev_nr = curr_nr
+        curr_nr = fib_nr
+        
+        return fib_nr
+
+    return fib
+
 
 def make_withdraw(balance, password):
     """Return a password-protected withdraw function.
