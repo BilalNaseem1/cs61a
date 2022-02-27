@@ -71,6 +71,23 @@ def make_withdraw(balance, password):
     True
     """
     "*** YOUR CODE HERE ***"
+    pwd_log = []
+    MAX_PWD_ATTEMPTS = 3
+    def withdraw(amount, usr_pwd):
+        nonlocal balance
+
+        if usr_pwd != password and len(pwd_log) < MAX_PWD_ATTEMPTS:
+            pwd_log.append(usr_pwd)
+            return 'Incorrect password'
+        elif len(pwd_log) == MAX_PWD_ATTEMPTS:
+            return 'Your account is locked. Attempts: [\'{p1}\', \'{p2}\', \'{p3}\']'.format(p1 = pwd_log[0], p2 = pwd_log[1], p3 = pwd_log[2])
+        elif amount > balance:
+            return 'Insufficient funds'
+        else:
+            balance -= amount
+            return balance
+    return withdraw
+
 
 class Mint:
     """A mint creates coins by stamping on years.
