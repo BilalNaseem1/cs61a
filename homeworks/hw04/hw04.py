@@ -200,6 +200,54 @@ class VendingMachine:
     'Here is your soda.'
     """
     "*** YOUR CODE HERE ***"
+    def __init__(self, product, price):
+        self.product = product
+        self.price = price
+        self.stock = 0
+        self.deposit_amount = 0
+
+    def is_out_of_stock(self):
+        return self.stock == 0
+
+    def has_insuficient_funds(self):
+        return self.deposit_amount < self.price
+
+    def get_out_of_stock_msg(self):
+        return 'Machine is out of stock.'
+
+    def get_stock_msg(self):
+        return 'Current {product} stock: {stock}'.format(product = self.product, stock = self.stock)
+
+    def get_here_is_your_msg(self, item):
+        return 'Here is your {item}'.format(item = item)
+
+    def get_format_money_msg(self, amount):
+        return '${amount}'.format(amount = amount)
+
+    def get_insuficient_funds_msg(self):
+        return 'You must deposit {amount} more.'.format(amount = self.get_format_money_msg(self.price - self.deposit_amount))
+
+    def deposit(self, amount):
+        if self.is_out_of_stock():
+            return self.get_out_of_stock_msg() + ' ' + self.get_here_is_your_msg(self.get_format_money_msg(amount)) + '.'
+        else:
+            self.deposit_amount += amount
+            return 'Current balance: {balance}'.format(balance = self.get_format_money_msg(self.deposit_amount))
+
+    def restock(self, amount):
+        self.stock += amount
+        return self.get_stock_msg()
+
+    def vend(self):
+        if self.is_out_of_stock():
+            return self.get_out_of_stock_msg()
+        elif self.has_insuficient_funds():
+            return self.get_insuficient_funds_msg()
+        else:
+            self.stock -= 1
+            self.change = self.deposit_amount - self.price
+            self.deposit_amount = 0
+            return (self.get_here_is_your_msg(self.product)) + (' and {change} change.'.format(change = self.get_format_money_msg(self.change)) if self.change > 0 else '.')
 
 def remove_all(link , value):
     """Remove all the nodes containing value in link. Assume that the
