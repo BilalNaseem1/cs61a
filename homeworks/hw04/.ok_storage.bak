@@ -2,3 +2,4 @@
 'make_withdraw-correct', (512, 70)
 'Mint-correct', (1024, 70)
 'VendingMachine-correct', (1536, 70)
+'remove_all-correct', (2048, 70)
