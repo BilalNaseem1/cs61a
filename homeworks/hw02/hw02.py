@@ -137,15 +137,11 @@ def make_repeater(f, n):
     >>> make_repeater(square, 0)(5) # Yes, it makes sense to apply the function zero times! 
     5
     """
-    "*** YOUR CODE HERE ***"
-    def repeated_f(x, n=n):
-        if n == 0:
-            return x
-        else:
-            return repeated_f(f(x), n - 1)
-    
-    return repeated_f
-        
+    "*** YOUR CODE HERE ***" 
+    if n == 0:
+        return lambda x: x
+    else:
+        return compose1(f, make_repeater(f, n - 1))
 
 def num_sevens(n):
     """Returns the number of times 7 appears as a digit of n.
@@ -168,16 +164,10 @@ def num_sevens(n):
     True
     """
     "*** YOUR CODE HERE ***"
-    #could be an ugly one-liner with bool to int conversion, but I prefer it this way :)
-    if n < 10 and n == 7:
-        return 1
-    elif n < 10:
-        return 0
-    elif n % 10 == 7:    
-        return 1 + num_sevens(n // 10)
+    if n < 10:
+        return int(n == 7)
     else:
-        return 0 + num_sevens(n // 10)
-
+        return int(n % 10 == 7) + num_sevens(n // 10)
 def pingpong(n):
     """Return the nth element of the ping-pong sequence.
 
