@@ -3,3 +3,6 @@
 *.ipynb*
 untitled
 .vscode*
+!/lab
+!/projects
+!/homeworks
