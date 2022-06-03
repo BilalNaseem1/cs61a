@@ -309,12 +309,13 @@ def generate_paths(t, x):
     [[0, 2], [0, 2, 1, 2]]
     """
 
-    "*** YOUR CODE HERE ***"
+    #"*** YOUR CODE HERE ***"
+    root = t.label
+    print(root)
+    #for _______________ in _________________:
+    #    for _______________ in _________________:
 
-    for _______________ in _________________:
-        for _______________ in _________________:
-
-            "*** YOUR CODE HERE ***"
+            #"*** YOUR CODE HERE ***"
 
 ## Link Class ##
 

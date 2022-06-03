@@ -3,6 +3,9 @@
 *.ipynb*
 untitled
 .vscode*
-!/lab/*
-!/projects/*
-!/homeworks/*
+curry.py
+hof.py
+iter.py
+linked_list.py
+recursion.py
+tree.py
