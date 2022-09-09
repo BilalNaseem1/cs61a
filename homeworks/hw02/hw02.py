@@ -200,30 +200,16 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
-    def should_switch_direction(digit, curr_count):
-        return (digit % 10 == 7 or digit == 7) or (curr_count % 10 == 7 or curr_count % 7 == 0 or num_sevens(curr_count) > 0)
-    
-    def increment(element):
-        return element + 1
-    
-    def decrement(element):
-        return element - 1
-    
-    def switch_direction(direction_up):
-        return not direction_up
-    
-    def count_to_n(n, curr_count = 1, element=1, direction_up = True):
-        if curr_count == n:
-            return element
-        elif should_switch_direction(element, curr_count):
-            if (direction_up):
-                #previous direction was up, but now it's changing, so we need to decrement the "element" and switch direction
-                return count_to_n(n, increment(curr_count), decrement(element), switch_direction(direction_up))
-            else:
-                #previous direction was down, but now it's changing to up, so we need to increment the "element"
-                return count_to_n(n, increment(curr_count), increment(element), switch_direction(direction_up))
+    def move_count(is_adding, curr_num, sequence_count):
+        if sequence_count == n:
+            return curr_num
         else:
-            return count_to_n(n, increment(curr_count), increment(element) if direction_up else decrement(element), direction_up)
+            if bool(num_sevens(sequence_count)) or sequence_count % 7 == 0:
+                return move_count(not is_adding, curr_num - 1 if is_adding  else curr_num + 1 , sequence_count + 1)
+            else:
+                return move_count(is_adding, curr_num + 1 if is_adding  else curr_num - 1 , sequence_count + 1)
+
+    return move_count(True, 1, 1)
 
         
 
