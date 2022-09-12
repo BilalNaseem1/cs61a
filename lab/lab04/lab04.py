@@ -14,7 +14,7 @@ def couple(s1, s2):
     """
     assert len(s1) == len(s2)
     "*** YOUR CODE HERE ***"
-    return for x, y in zip(s1, s2)]
+    return [[x, y] for x, y in zip(s1, s2)]
 
 def enumerate(s, start=0):
     """Returns a list of lists, where the i-th list contains i+start and
