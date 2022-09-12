@@ -48,22 +48,14 @@ def add_chars(w1, w2):
     True
     """
     "*** YOUR CODE HERE ***"
-    def find_missing_chars(str1, str2, missing_chars=''):
-        #the base case, we've cut through all of string2
-        if len(str2) == 0:
-            return missing_chars
-        #we found a missing char
-        if str2[0] not in str1:
-            missing_chars += str2[0]
-            return find_missing_chars(str1, str2[1:], missing_chars)
-        #the first letter of string1 is matched, cut both string1 and string2 - first letter off    
-        elif len(str1) > 1:
-            return find_missing_chars(str1[1:], str2[1:], missing_chars)
-        #string1 only contains 1 char, we only keep cutting string2
-        else:
-            return find_missing_chars(str1, str2[1:], missing_chars)
-        
-    return find_missing_chars(w1, w2)
+    missing_chars = ''
+    if len(w1) == 0:
+        return w2
+    elif w1[0] == w2[0]:
+        return add_chars(w1[1:], w2[1:])
+    else:
+        missing_chars += w2[0] + add_chars(w1, w2[1:])
+        return missing_chars
 
 def acorn_finder(t):
     """Returns True if t contains a node with the value 'acorn' and
@@ -83,13 +75,11 @@ def acorn_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
-    acorn = False
-    
-    if label(t) == 'acorn':
-        return True
+    is_acorn = label(t) == 'acorn'
+
     for b in branches(t):
-        acorn = acorn or acorn_finder(b)
-    return acorn      
+        is_acorn = is_acorn or acorn_finder(b)
+    return is_acorn
     
  
 # Tree ADT
