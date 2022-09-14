@@ -73,19 +73,21 @@ def pig_latin(word):
     VOWEL_SUFFIX = 'way'
     
     begins_with_vowel = word[0] in VOWELS
-    
-    def translate_cnsnant_word(word):
+
+    if begins_with_vowel:
+        return word + VOWEL_SUFFIX
+    else:
         cnsnant_cluster = ''
         slice_index = 0
-        for i in range(0, len(word)):
+
+        for i in range(len(word)):
             if word[i] not in VOWELS:
-                cnsnant_cluster += word[i]
-                slice_index += 1
+                 cnsnant_cluster += word[i]
+                 slice_index += 1
             else:
-                break
+                 break
         return word[slice_index:] + cnsnant_cluster + CNSNANT_SUFFIX
     
-    return word + VOWEL_SUFFIX if begins_with_vowel else translate_cnsnant_word(word)
 
 #q4
 def autocorrect(user_input, words_list, score_function):
