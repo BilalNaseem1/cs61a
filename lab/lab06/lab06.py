@@ -32,6 +32,6 @@ def map(fn, lst):
     [25, 1, 4, 0]
     """
     "*** YOUR CODE HERE ***"
-    for i in range (0, len(lst)):
+    for i in range (len(lst)):
         lst[i] = fn(lst[i])
     
