@@ -30,8 +30,10 @@ def new_sample(path, line_nr):
 
 #q2
 def analyze(sample_paragraph, typed_string, start_time, end_time):    
-    #returns words typed per minute
-    def get_w_p_m(typed_string, start_time, end_time):
+    #words typed per minute
+    stripped_typed = strip(typed_string)
+
+    def words_per_minute(typed_string, start_time, end_time):
         ONE_WORD_LENGTH = 5
         SECONDS_IN_MINUTE = 60
         
@@ -42,34 +44,27 @@ def analyze(sample_paragraph, typed_string, start_time, end_time):
         
         return words_per_minute
     
-    #returns the accuracy of typed text
-    def get_acc_p(sample_paragraph, typed_string):
-        sample_words = split(sample_paragraph)
-        amount_sample_words = len(sample_words)
+    #the accuracy of typed text
         
-        typed_words = split(typed_string)
-        amount_typed_words = len(typed_words)
-                
+    def accuracy(sample, typed):
+        sample_words = sample.split()
+        typed_words = typed.split()
+
+        if len(typed_words) <= 0:
+            return 0.0
+
+        words_matched = 0
+        for s, t in zip(sample_words, typed_words):
+            if lower(s) == lower(t):
+                words_matched += 1
+
         #calculate based on required words. If less then required typed, calculate based on typed amount
-        words_amount = amount_sample_words if amount_sample_words <= amount_typed_words else amount_typed_words
-        
-        def get_nr_of_matches(sample_words, typed_words, words_amount):
-            nr_of_matches = 0
-            for i in range(0, words_amount):
-                    nr_of_matches += int(sample_words[i] == typed_words[i])
-            return nr_of_matches
-        
-        nr_of_matches = get_nr_of_matches(sample_words, typed_words, words_amount)
-        
-        accuracy = 0.0 if nr_of_matches <= 0 else (nr_of_matches / words_amount) * 100
-            
-        return accuracy
-        
-    words_per_minute = get_w_p_m(typed_string, start_time, end_time)
-    acc_p = get_acc_p(sample_paragraph, typed_string)
+        total_words = len(sample_words) if len(sample_words) < len(typed_words) else len(typed_words)
+        match_percentage = (words_matched / total_words) * 100
+
+        return match_percentage
     
-    
-    return [words_per_minute, acc_p]
+    return [words_per_minute(typed_string, start_time, end_time), accuracy(sample_paragraph, stripped_typed)]
 
 #q3
 def pig_latin(word):
