@@ -100,10 +100,7 @@ def autocorrect(user_input, words_list, score_function):
         score_key = score_function(user_input, word)
         
         if score_key not in score_log:
-            print('DEBUG', user_input, word)
             score_log[score_key] = word
-    print('DEBUG', min(score_log))
-    
     return score_log[min(score_log)]
 
 #q5
