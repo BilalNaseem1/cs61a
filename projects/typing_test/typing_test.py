@@ -119,42 +119,29 @@ def swap_score(word1, word2):
 
 def score_function(word1, word2):
     """A score_function that computes the edit distance between word1 and word2."""
-
     add_char = lambda word1, char: char + word1
-    remove_char = lambda word1: word1[1:]
-    substitute_char = lambda word1, char: char + word1[1:]
-    
-    ### index out of range cases BEGINNING
-    #traversed all of word2, word1 is longer, only remove chars
-    if len(word2) == 0 and len(word1) > 0:
-        return 1 + score_function(remove_char(word1), word2)
-    #traversed all of word2
-    elif len(word2) == 0:
+    rem_char = lambda word1: word1[1:]
+    sub_char = lambda word1, char: char + word1[1:]
+    #words match
+    if word1 == word2:
         return 0
-    #only makes sense to add chars to word1
+    #if len(word2) is 0 return len(word1)
+    elif len(word2) == 0:
+        return len(word1)
     elif len(word1) == 0:
         return 1 + score_function(add_char(word1, word2[0]), word2)
-    ### index out of range cases END
-    
-    #we found a match, cut off the matching chars from both words
     elif word1[0] == word2[0]:
         return 0 + score_function(word1[1:], word2[1:])
-    #only makes sense to remove or sub chars in word1
     elif len(word1) > len(word2):
         return 1 + min(
-            [
-                score_function(remove_char(word1), word2),
-                score_function(substitute_char(word1, word2[0]), word2)
-            ]
+            score_function(sub_char(word1, word2[0]), word2),
+            score_function(rem_char(word1), word2)
         )
-    #try all 3 operations
     else:
         return 1 + min(
-            [
-                score_function(add_char(word1, word2[0]), word2),
-                score_function(remove_char(word1), word2),
-                score_function(substitute_char(word1, word2[0]), word2)
-            ]
+            score_function(sub_char(word1, word2[0]), word2),
+            score_function(rem_char(word1), word2),
+            score_function(add_char(word1, word2[0]), word2)
         )
     
 # END Q6
