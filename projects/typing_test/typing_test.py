@@ -117,11 +117,11 @@ def swap_score(word1, word2):
 
 # Q6
 
+add_char = lambda word1, char: char + word1
+rem_char = lambda word1: word1[1:]
+sub_char = lambda word1, char: char + word1[1:]
 def score_function(word1, word2):
     """A score_function that computes the edit distance between word1 and word2."""
-    add_char = lambda word1, char: char + word1
-    rem_char = lambda word1: word1[1:]
-    sub_char = lambda word1, char: char + word1[1:]
     #words match
     if word1 == word2:
         return 0
@@ -151,99 +151,64 @@ KEY_DISTANCES = get_key_distances()
 # BEGIN Q7-8
 "*** YOUR CODE HERE ***"
 def score_function_accurate(word1, word2):
-    
-    add_char = lambda word1, char: char + word1
-    remove_char = lambda word1: word1[1:]
-    substitute_char = lambda word1, char: char + word1[1:]
-    
-    
-    ### index out of range cases BEGINNING
-    #traversed all of word2, word1 is longer, only remove chars
-    if len(word2) == 0 and len(word1) > 0:
-        return 1 + score_function_accurate(remove_char(word1), word2)
-    #traversed all of word2
-    elif len(word2) == 0:
+    #words match
+    if word1 == word2:
         return 0
-    #only makes sense to add chars to word1
+    #if len(word2) is 0 return len(word1)
+    elif len(word2) == 0:
+        return len(word1)
     elif len(word1) == 0:
         return 1 + score_function_accurate(add_char(word1, word2[0]), word2)
-    ### index out of range cases END
-    
-    #we found a match, cut off the matching chars from both words
     elif word1[0] == word2[0]:
         return 0 + score_function_accurate(word1[1:], word2[1:])
-    #only makes sense to remove or sub chars in word1
     elif len(word1) > len(word2):
         return min(
-            [
-                1 + score_function_accurate(remove_char(word1), word2),
-                KEY_DISTANCES[word1[0], word2[0]] + score_function_accurate(substitute_char(word1, word2[0]), word2)
-            ]
+            KEY_DISTANCES[word1[0], word2[0]] + score_function_accurate(sub_char(word1, word2[0]), word2),
+            1 + score_function_accurate(rem_char(word1), word2)
         )
-    #try all 3 operations
     else:
         return min(
-            [
-                1 + score_function_accurate(add_char(word1, word2[0]), word2),
-                1 + score_function_accurate(remove_char(word1), word2),
-                KEY_DISTANCES[word1[0], word2[0]] + score_function_accurate(substitute_char(word1, word2[0]), word2)
-            ]
+            KEY_DISTANCES[word1[0], word2[0]] + score_function_accurate(sub_char(word1, word2[0]), word2),
+            1 + score_function_accurate(rem_char(word1), word2),
+            1 + score_function_accurate(add_char(word1, word2[0]), word2)
         )
 
-def score_function_accurate_memo(word1, word2):
 
-    add_char = lambda word1, char: char + word1
-    remove_char = lambda word1: word1[1:]
-    substitute_char = lambda word1, char: char + word1[1:]
-
-
-    ### index out of range cases BEGINNING
-    #traversed all of word2, word1 is longer, only remove chars
-    if len(word2) == 0 and len(word1) > 0:
-        return 1 + score_function_final(remove_char(word1), word2)
-    #traversed all of word2
-    elif len(word2) == 0:
-        return 0
-    #only makes sense to add chars to word1
-    elif len(word1) == 0:
-        return 1 + score_function_final(add_char(word1, word2[0]), word2)
-    ### index out of range cases END
-
-    #we found a match, cut off the matching chars from both words
-    elif word1[0] == word2[0]:
-        return 0 + score_function_final(word1[1:], word2[1:])
-    #only makes sense to remove or sub chars in word1
-    elif len(word1) > len(word2):
-        return min(
-            [
-                1 + score_function_final(remove_char(word1), word2),
-                KEY_DISTANCES[word1[0], word2[0]] + score_function_final(substitute_char(word1, word2[0]), word2)
-            ]
-        )
-    #try all 3 operations
-    else:
-        return min(
-            [
-                1 + score_function_final(add_char(word1, word2[0]), word2),
-                1 + score_function_final(remove_char(word1), word2),
-                KEY_DISTANCES[word1[0], word2[0]] + score_function_final(substitute_char(word1, word2[0]), word2)
-            ]
-        )
-    
-    
-def memoize(score_function_accurate_memo):
+def score_function_final(word1, word2):
     cache = {}
-    def get_edit_distance(word1, word2):
-        if word1 + word2 in cache:
-            return cache[word1 + word2]
-        elif word2 + word1 in cache:
-            return cache[word2 + word1]
-        else:
-            cache[word1 + word2] = score_function_accurate_memo(word1, word2)
-            return cache[word1 + word2]
     
-    return get_edit_distance
+    def save_in_cache(word1, word2, score):
+        cache[word1+word2] = score
+        cache[word2+word1] = score
 
-score_function_final = memoize(score_function_accurate_memo)
+    def score_function(word1, word2):
+        #words match
+        if word1 == word2:
+            return 0
+        #if len(word2) is 0 return len(word1)
+        elif len(word2) == 0:
+            return len(word1)
+        elif len(word1) == 0:
+            return 1 + score_function_memo(add_char(word1, word2[0]), word2)
+        elif word1[0] == word2[0]:
+            return 0 + score_function_memo(word1[1:], word2[1:])
+        elif len(word1) > len(word2):
+            return min(
+                KEY_DISTANCES[word1[0], word2[0]] + score_function_memo(sub_char(word1, word2[0]), word2),
+                1 + score_function_memo(rem_char(word1), word2)
+            )
+        else:
+            return min(
+                KEY_DISTANCES[word1[0], word2[0]] + score_function_memo(sub_char(word1, word2[0]), word2),
+                1 + score_function_memo(rem_char(word1), word2),
+                1 + score_function_memo(add_char(word1, word2[0]), word2)
+            )
+
+    def score_function_memo(word1, word2):
+        if word1+word2 not in cache:
+            save_in_cache(word1, word2, score_function(word1, word2)) 
+        return cache[word1+word2]
+
+    return score_function_memo(word1, word2)
 
 # END Q7-8
