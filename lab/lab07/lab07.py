@@ -14,16 +14,13 @@ def paths(m, n):
     1
     """
     "*** YOUR CODE HERE ***"
-    if m == 0:
-        return 0
-    elif m == 1:
-        return 1
-    elif n == 0:
-        return 0
-    elif n == 1:
+    if m == 1 or n == 1:
         return 1
     else:
-        return paths(m - 1, n) + paths(m, n - 1)
+        move_left = paths(m - 1, n) 
+        move_down = paths(m, n - 1)
+
+        return move_left + move_down
 
 def build_fbt(nodes):
     if nodes == 0:
