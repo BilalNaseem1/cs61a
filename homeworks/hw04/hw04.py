@@ -18,28 +18,28 @@ def make_fib():
     12
     """
     "*** YOUR CODE HERE ***"
-    fib_nr = 0
-    prev_nr = 0
-    curr_nr = 0
-    def fib():
-        nonlocal prev_nr
-        nonlocal curr_nr
-        nonlocal fib_nr
-        if curr_nr == 0:
-            curr_nr = 1
-            return fib_nr
+    prev = 0
+    curr = 1
 
-        elif fib_nr == 0:
-            fib_nr = 1
-            return fib_nr
+    i = 2
+    fib_count = 0
 
-        fib_nr = prev_nr + curr_nr
-        prev_nr = curr_nr
-        curr_nr = fib_nr
-        
-        return fib_nr
+    fib_list = [prev, curr]
 
-    return fib
+    def fib_generator():
+        nonlocal prev, curr, i, fib_count
+
+        while True:
+            yield fib_list[fib_count]
+            fib_count += 1
+
+            if fib_count >= i:
+                prev, curr = curr, prev + curr
+                fib_list.append(curr)
+                i += 1
+    
+    fib = fib_generator()
+    return lambda: next(fib)
 
 
 def make_withdraw(balance, password):
