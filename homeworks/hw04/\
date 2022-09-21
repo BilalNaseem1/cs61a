@@ -273,25 +273,6 @@ def remove_all(link , value):
         else:
             link.rest = link.rest.rest
 
-def get_num_leaves(t):
-    if t.is_leaf():
-        return 1
-    else:
-        leaves_count = 0
-        for b in t.branches:
-            leaves_count += get_num_leaves(b)
-        return leaves_count
-
-    return get_num_leaves(t)
-
-def has_path(t, x):
-    if t.label == x:
-        return True
-    else:
-        truth_cumulator = False
-        for b in t.branches:
-            truth_cumulator = truth_cumulator or (b.label == x or has_path(b, x)) 
-        return truth_cumulator
 
 def generate_paths(t, x):
     """Yields all possible paths from the root of t to a node with the label x
@@ -326,18 +307,15 @@ def generate_paths(t, x):
     >>> sorted(list(path_to_2))
     [[0, 2], [0, 2, 1, 2]]
     """
-    paths = []
-    if t.label == x:
-        return [t.label]
-    elif has_path(t, x):
-        path = [t.label]
+
+    if t.is_leaf():
+        return t.label
+    else:
+        paths = [t.label]
         for b in t.branches:
-            if has_path(b, x):
-                paths += path + generate_paths(b, x)
+            for c in generate_paths(b, 1):
+               paths.append(c) 
         return paths
-
-
-                
     #"*** YOUR CODE HERE ***"
     #for _______________ in _________________:
     #    for _______________ in _________________:
