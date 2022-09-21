@@ -296,7 +296,7 @@ def has_path(t, x):
 def generate_paths(t, x):
     """Yields all possible paths from the root of t to a node with the label x
     as a list.
->>> t1 = Tree(1, [Tree(2, [Tree(3), Tree(4, [Tree(6)]), Tree(5)]), Tree(5)])
+    >>> t1 = Tree(1, [Tree(2, [Tree(3), Tree(4, [Tree(6)]), Tree(5)]), Tree(5)])
     >>> print(t1)
     1
       2
@@ -326,23 +326,14 @@ def generate_paths(t, x):
     >>> sorted(list(path_to_2))
     [[0, 2], [0, 2, 1, 2]]
     """
-    paths = []
+    root = [t.label]
     if t.label == x:
-        return [t.label]
-    elif has_path(t, x):
-        path = [t.label]
+        yield root
+
+    if has_path(t, x):
         for b in t.branches:
-            if has_path(b, x):
-                paths += path + generate_paths(b, x)
-        return paths
-
-
-                
-    #"*** YOUR CODE HERE ***"
-    #for _______________ in _________________:
-    #    for _______________ in _________________:
-
-            #"*** YOUR CODE HERE ***"
+            for path in generate_paths(b, x):
+                yield root + path
 
 ## Link Class ##
 
@@ -462,6 +453,3 @@ class Tree:
                 tree_str += print_tree(b, indent + 1)
             return tree_str
         return print_tree(self).rstrip()
-t1 = Tree(1, [Tree(2, [Tree(3), Tree(4, [Tree(6)]), Tree(5)]), Tree(5)])
-t2 = Tree(0, [Tree(2, [t1])])
-t3 = Tree(1, [Tree(2) , Tree(5, [Tree(4), Tree(6)])])
