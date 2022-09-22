@@ -215,6 +215,8 @@ class ThrowerAnt(Ant):
 
         while min_range > distance:
             for i in range(0, min_range):
+                if not curr_place.entrance:
+                    return None
                 curr_place = curr_place.entrance
                 distance += 1
         return curr_place
@@ -230,7 +232,7 @@ class ThrowerAnt(Ant):
         distance = 0
         bee_place = None
         
-        while curr_place != hive and distance <= self.max_range:
+        while curr_place and curr_place != hive and distance <= self.max_range:
             if curr_place.bees:
                 bee_place = curr_place
                 break
@@ -282,10 +284,11 @@ class FireAnt(Ant):
     """FireAnt cooks any Bee in its Place when it expires."""
 
     name = 'Fire'
+    food_cost = 5
     damage = 3
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 5
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 5
 
     def reduce_armor(self, amount):
@@ -295,6 +298,15 @@ class FireAnt(Ant):
         """
         # BEGIN Problem 5
         "*** YOUR CODE HERE ***"
+        self.armor -= amount
+        bees = list(self.place.bees)
+
+        #ant dies, remove from place and damage all bees in its place
+        if self.armor <= 0:
+            self.place.remove_insect(self)
+            for bee in bees:
+                Insect.reduce_armor(bee, self.damage)
+
         # END Problem 5
 
 class HungryAnt(Ant):
@@ -302,25 +314,27 @@ class HungryAnt(Ant):
     While digesting, the HungryAnt can't eat another Bee.
     """
     name = 'Hungry'
-    # OVERRIDE CLASS ATTRIBUTES HERE
-    # BEGIN Problem 6
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 6
+    food_cost = 4
+    time_to_digest = 3
+    implemented = True   # Change to True to view in the GUI
 
     def __init__(self, armor=1):
-        # BEGIN Problem 6
-        "*** YOUR CODE HERE ***"
-        # END Problem 6
+        self.armor = armor
+        self.digesting = 0
 
     def eat_bee(self, bee):
-        # BEGIN Problem 6
-        "*** YOUR CODE HERE ***"
-        # END Problem 6
+        Insect.reduce_armor(bee, bee.armor)
+        self.digesting = self.time_to_digest
 
     def action(self, colony):
         # BEGIN Problem 6
-        "*** YOUR CODE HERE ***"
-        # END Problem 6
+        if self.digesting > 0:
+            self.digesting -= 1
+            return None
+        random_bee = random_or_none(self.place.bees)
+
+        if random_bee:
+            self.eat_bee(random_bee)
 
 class NinjaAnt(Ant):
     """NinjaAnt does not block the path and damages all bees in its place."""
