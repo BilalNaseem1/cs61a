@@ -206,6 +206,18 @@ class ThrowerAnt(Ant):
     implemented = True
     damage = 1
     food_cost = 3
+    min_range = 0
+    max_range = float('inf')
+    
+    def first_place_in_range(self, min_range):
+        distance = 0
+        curr_place = self.place
+
+        while min_range > distance:
+            for i in range(0, min_range):
+                curr_place = curr_place.entrance
+                distance += 1
+        return curr_place
 
     def nearest_bee(self, hive):
         """Return the nearest Bee in a Place that is not the HIVE, connected to
@@ -214,14 +226,16 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
-        curr_place = self.place
+        curr_place = self.first_place_in_range(self.min_range)
+        distance = 0
         bee_place = None
-
-        while curr_place != hive:
+        
+        while curr_place != hive and distance <= self.max_range:
             if curr_place.bees:
                 bee_place = curr_place
                 break
             curr_place = curr_place.entrance
+            distance += 1
 
         if bee_place:
             return random_or_none(bee_place.bees)
@@ -251,19 +265,18 @@ class ShortThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at most 3 places away."""
 
     name = 'Short'
-    # OVERRIDE CLASS ATTRIBUTES HERE
-    # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 4
+    food_cost = 2
+    max_range = 3
+    implemented = True   # Change to True to view in the GUI
+
 
 class LongThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at least 5 places away."""
 
     name = 'Long'
-    # OVERRIDE CLASS ATTRIBUTES HERE
-    # BEGIN Problem 4
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 4
+    food_cost = 2
+    min_range = 5
+    implemented = True   # Change to True to view in the GUI
 
 class FireAnt(Ant):
     """FireAnt cooks any Bee in its Place when it expires."""
