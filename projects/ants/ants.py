@@ -444,6 +444,14 @@ class Water(Place):
 
 # BEGIN Problem 12
 # The ScubaThrower class
+class ScubaThrower(ThrowerAnt):
+    name = 'Scuba'
+    food_cost = 6
+    is_watersafe = True
+    implemented = True
+
+    def __init__(self, armor=1):
+        self.armor = 1
 # END Problem 12
 
 # BEGIN Problem 13
