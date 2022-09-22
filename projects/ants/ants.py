@@ -214,7 +214,19 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
-        return random_or_none(self.place.bees)
+        curr_place = self.place
+        bee_place = None
+
+        while curr_place != hive:
+            if curr_place.bees:
+                bee_place = curr_place
+                break
+            curr_place = curr_place.entrance
+
+        if bee_place:
+            return random_or_none(bee_place.bees)
+        else:
+            return bee_place
         # END Problem 3 and 4
 
     def throw_at(self, target):
