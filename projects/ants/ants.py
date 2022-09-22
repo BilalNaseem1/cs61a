@@ -145,7 +145,7 @@ class Bee(Insect):
         """Return True if this Bee cannot advance to the next Place."""
         # Phase 4: Special handling for NinjaAnt
         # BEGIN Problem 7
-        return self.place.ant is not None
+        return self.place.ant and self.place.ant.blocks_path
         # END Problem 7
 
     def action(self, colony):
@@ -171,6 +171,7 @@ class Ant(Insect):
     is_ant = True
     implemented = False  # Only implemented Ant classes should be instantiated
     food_cost = 0
+    blocks_path = True
     # ADD CLASS ATTRIBUTES HERE
 
     def __init__(self, armor=1):
@@ -340,16 +341,16 @@ class NinjaAnt(Ant):
     """NinjaAnt does not block the path and damages all bees in its place."""
 
     name = 'Ninja'
+    food_cost = 5
     damage = 1
-    # OVERRIDE CLASS ATTRIBUTES HERE
-    # BEGIN Problem 7
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 7
+    blocks_path = False
+    implemented = True   # Change to True to view in the GUI
 
     def action(self, colony):
-        # BEGIN Problem 7
-        "*** YOUR CODE HERE ***"
-        # END Problem 7
+        bees = list(colony.bees)
+
+        for bee in bees:
+            Insect.reduce_armor(bee, self.damage)
 
 # BEGIN Problem 8
 # The WallAnt class
