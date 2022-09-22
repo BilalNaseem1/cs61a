@@ -99,6 +99,7 @@ class Insect(object):
 
     is_ant = False
     damage = 0
+    is_watersafe = False
     # ADD CLASS ATTRIBUTES HERE
 
     def __init__(self, armor, place=None):
@@ -135,6 +136,7 @@ class Bee(Insect):
 
     name = 'Bee'
     damage = 1
+    is_watersafe = True
     # OVERRIDE CLASS ATTRIBUTES HERE
 
 
@@ -434,7 +436,10 @@ class Water(Place):
         """Add an Insect to this place. If the insect is not watersafe, reduce
         its armor to 0."""
         # BEGIN Problem 11
+        Place.add_insect(self, insect)
         "*** YOUR CODE HERE ***"
+        if not insect.is_watersafe:
+            Insect.reduce_armor(insect, insect.armor)
         # END Problem 11
 
 # BEGIN Problem 12
