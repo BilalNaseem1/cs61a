@@ -354,6 +354,13 @@ class NinjaAnt(Ant):
 
 # BEGIN Problem 8
 # The WallAnt class
+class WallAnt(Ant):
+    name = 'Wall'
+    food_cost = 4
+    implemented = True
+    def __init__(self, armor=4):
+        self.armor = armor
+
 # END Problem 8
 
 class BodyguardAnt(Ant):
