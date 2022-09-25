@@ -142,7 +142,23 @@ def store_digits(n):
     Link(8, Link(7, Link(6)))
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return Link(n)
+    else:
+        first_digit = int(str(n)[0])
+        digit_cut = int(str(n)[1:])
 
+        return Link(first_digit, store_digits(digit_cut))
+
+
+t = Tree(1, [Tree(3, [Tree(5)]), Tree(7)])
+def sum_tree(t):
+    if t.is_leaf():
+        return t.label
+    else:
+        for b in t.branches:
+            t.label += sum_tree(b)
+        return t.label
 def cumulative_sum(t):
     """Mutates t so that each node's label becomes the sum of all labels in
     the corresponding subtree rooted at t.
@@ -153,3 +169,5 @@ def cumulative_sum(t):
     Tree(16, [Tree(8, [Tree(5)]), Tree(7)])
     """
     "*** YOUR CODE HERE ***"
+    for branch in t.branches:
+        t.label += sum_tree(branch)
