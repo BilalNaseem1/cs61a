@@ -32,7 +32,7 @@
 ; expect (0 2 8)
 
 (define (make-adder num)
-  'YOUR-CODE-HERE
+  (lambda (x) (+ x num))
 )
 
 ;;; Tests
