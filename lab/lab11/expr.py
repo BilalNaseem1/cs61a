@@ -181,6 +181,14 @@ class CallExpr(Expr):
         Number(14)
         """
         "*** YOUR CODE HERE ***"
+        func = self.operator.eval(env)
+        operands = []
+        
+        for operand in self.operands:
+            operands.append(operand.eval(env))
+
+        return func.apply(operands)
+
 
     def __str__(self):
         function = str(self.operator)
