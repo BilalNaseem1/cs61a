@@ -299,6 +299,13 @@ class LambdaFunction(Value):
             raise TypeError("Cannot match parameters {} to arguments {}".format(
                 comma_separated(self.parameters), comma_separated(arguments)))
         "*** YOUR CODE HERE ***"
+        p_env_cp = self.parent.copy()
+
+        for par, arg in zip(self.parameters, arguments):
+            p_env_cp[par] = arg
+
+        return self.body.eval(p_env_cp)
+
 
     def __str__(self):
         definition = LambdaExpr(self.parameters, self.body)
