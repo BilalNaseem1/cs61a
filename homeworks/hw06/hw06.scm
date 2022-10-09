@@ -48,8 +48,14 @@
 ; Tail recursion
 
 (define (replicate x n)
-  'YOUR-CODE-HERE
-  )
+    (define (replicate-tail x curr-len accumulator)
+        (if (= n curr-len)
+            accumulator
+            (replicate-tail x (+ curr-len 1) (append accumulator (list x)))
+            )
+        )
+    (replicate-tail x 0 (list))
+    )
 
 (define (accumulate combiner start n term)
   'YOUR-CODE-HERE
