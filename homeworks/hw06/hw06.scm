@@ -37,8 +37,13 @@
 
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
-  'YOUR-CODE-HERE
-  )
+    (cond
+        ((> 0 total) nil)
+        ((null? denoms) nil)
+        ((= 0 total) (list ()))
+        (else (append(cons-all (car denoms) (list-change (- total (car denoms)) denoms)) (list-change total (cdr denoms))))
+        ) 
+) 
 
 ; Tail recursion
 

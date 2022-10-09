@@ -1,3 +1,4 @@
 'cadr-caddr-correct', (0, 70)
 'unique-correct', (512, 70)
 'cons-all-correct', (1024, 70)
+'list-change-correct', (1536, 70)
