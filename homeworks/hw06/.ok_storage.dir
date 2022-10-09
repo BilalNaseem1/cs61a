@@ -3,3 +3,4 @@
 'cons-all-correct', (1024, 70)
 'list-change-correct', (1536, 70)
 'replicate-correct', (2048, 70)
+'accumulate-correct', (2560, 70)

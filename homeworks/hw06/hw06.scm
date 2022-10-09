@@ -58,7 +58,10 @@
     )
 
 (define (accumulate combiner start n term)
-  'YOUR-CODE-HERE
+    (if (= n 1)
+        (combiner start (term 1))
+        (combiner start (accumulate combiner (term n) (- n 1) term))
+    )
 )
 
 (define (accumulate-tail combiner start n term)
