@@ -65,7 +65,12 @@
 )
 
 (define (accumulate-tail combiner start n term)
-  'YOUR-CODE-HERE
+      (define (accumulate x accumulated)
+        ( if (= x 1)
+          (combiner accumulated (term x))
+          (accumulate (- x 1) (combiner accumulated (term x)))
+        ))
+    (accumulate (- n 1) (combiner start (term n)))
 )
 
 
