@@ -453,3 +453,4 @@ class Tree:
                 tree_str += print_tree(b, indent + 1)
             return tree_str
         return print_tree(self).rstrip()
+t1 = Tree(1, [Tree(2, [Tree(3), Tree(4, [Tree(6)]), Tree(5)]), Tree(5)])
