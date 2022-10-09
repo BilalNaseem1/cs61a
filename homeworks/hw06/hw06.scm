@@ -15,12 +15,25 @@
   (car (cddr s))
 )
 
-(define (unique s)
-  'YOUR-CODE-HERE
+(define (remove-item s item)
+    (filter (
+            lambda (x) (not(eq? x item))
+            )
+    s
+    )
 )
 
+(define (unique s)
+    (if (null? s)
+    nil
+    (cons (car s) (unique(remove-item s (car s))))
+    )
+)
+
+
 (define (cons-all first rests)
-  'replace-this-line)
+  (map (lambda (rest) (cons first rest)) rests)
+  )
 
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
