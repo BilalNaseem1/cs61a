@@ -5,3 +5,4 @@
 'replicate-correct', (2048, 70)
 'accumulate-correct', (2560, 70)
 'accumulate-tail-correct', (3072, 70)
+'list-comp-correct', (3584, 70)
