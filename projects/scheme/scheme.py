@@ -151,6 +151,14 @@ class BuiltinProcedure(Procedure):
             args = args.second
         # BEGIN PROBLEM 4
         "*** YOUR CODE HERE ***"
+        if self.use_env:
+            python_args.append(env)
+
+        try:
+            return self.fn(*python_args)
+        except TypeError:
+            raise SchemeError('Wrong number of arguments: {0}'.format(len(args)))
+
         # END PROBLEM 4
 
 class LambdaProcedure(Procedure):
