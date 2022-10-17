@@ -34,6 +34,25 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 5
         "*** YOUR CODE HERE ***"
+        first_eval = scheme_eval(first, env)
+        operands = []
+        print("DEBUG: ", first)
+        print("DEBUG: ", rest)
+
+        if isinstance(first_eval, Procedure):
+            operator =  first_eval
+            rest_first = scheme_eval(rest.first, env)
+
+            rest_second = scheme_eval(rest.second, env)
+            rest_evaled = Pair(rest_first, rest_second)
+
+            return scheme_apply(operator, rest_evaled, env)
+        else:
+            if rest is nil:
+                return Pair(scheme_eval(first_eval, env), nil)
+            else:
+                return Pair(scheme_eval(first_eval, env), scheme_eval(rest, env))
+
         # END PROBLEM 5
 
 def self_evaluating(expr):
