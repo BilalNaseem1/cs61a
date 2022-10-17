@@ -109,6 +109,13 @@ circumference
 (f 5)
 ; expect 136
 
+(define (make-is-equal num)
+    (lambda (x) (= num x))
+    )
+; expect make-is-equal
+(make-is-equal 5 5)
+; expect #t
+
 ;;; 1.1.6
 
 (define (abs x)
