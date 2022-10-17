@@ -10,6 +10,7 @@ from ucb import main, trace
 ##############
 
 
+
 def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in environment ENV.
 
@@ -35,23 +36,15 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         # BEGIN PROBLEM 5
         "*** YOUR CODE HERE ***"
         first_eval = scheme_eval(first, env)
-        operands = []
-        print("DEBUG: ", first)
-        print("DEBUG: ", rest)
+        eval_operands = lambda operand: scheme_eval(operand, env)
 
         if isinstance(first_eval, Procedure):
             operator =  first_eval
-            rest_first = scheme_eval(rest.first, env)
-
-            rest_second = scheme_eval(rest.second, env)
-            rest_evaled = Pair(rest_first, rest_second)
+            rest_evaled = rest.map(eval_operands) 
 
             return scheme_apply(operator, rest_evaled, env)
-        else:
-            if rest is nil:
-                return Pair(scheme_eval(first_eval, env), nil)
-            else:
-                return Pair(scheme_eval(first_eval, env), scheme_eval(rest, env))
+
+        raise SchemeError('Error - Missing operator')
 
         # END PROBLEM 5
 
