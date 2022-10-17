@@ -132,6 +132,24 @@ class Frame(object):
         """
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
+        if len(formals) != len(vals):
+            raise SchemeError('Error! Differing len of formals & vals!')
+        
+        child = Frame(self)
+
+        if len(formals) == 0:
+            return child
+        
+        child.define(formals.first, vals.first)
+
+        next_param = formals.second
+        next_val = vals.second
+        while next_param is not nil:
+            child.define(next_param.first, next_val.first)
+            next_param = next_param.second
+            next_val = next_val.second
+
+        return child
         # END PROBLEM 11
 
 ##############
