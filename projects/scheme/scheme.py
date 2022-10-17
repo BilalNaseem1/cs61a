@@ -240,21 +240,28 @@ def do_define_form(expressions, env):
         check_form(expressions, 2, 2)
         # BEGIN PROBLEM 6
         "*** YOUR CODE HERE ***"
-        name = expressions.first
 
         if len(expressions.second) == 1:
             val = scheme_eval(expressions.second.first, env)
         else:
             val = scheme_eval(expressions.second, env)
 
-        env.define(name, val)
+        env.define(target, val)
 
-        return name
+        return target
 
         # END PROBLEM 6
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 10
         "*** YOUR CODE HERE ***"
+        name = target.first
+        formals = target.second
+        body = expressions.second
+
+        val = LambdaProcedure(formals, body, env)
+        env.define(name, val)
+
+        return name
         # END PROBLEM 10
     else:
         bad_target = target.first if isinstance(target, Pair) else target
