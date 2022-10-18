@@ -405,6 +405,26 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     # BEGIN PROBLEM 15
     "*** YOUR CODE HERE ***"
+    check_form(bindings.first, 2, 2)
+
+    next_binding = bindings.second
+
+    while next_binding is not nil:
+
+        check_form(bindings.first, 2, 2)
+        next_binding = next_binding.second
+
+
+    map_formals = lambda binding: binding.first
+    map_vals = lambda binding: eval_all(binding.second, env)
+
+    formals = bindings.map(map_formals)
+
+    vals = bindings.map(map_vals)
+    check_formals(formals)
+
+        
+    return env.make_child_frame(formals, vals)
     # END PROBLEM 15
 
 def do_define_macro(expressions, env):
