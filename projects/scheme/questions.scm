@@ -9,8 +9,12 @@
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 17
-  'replace-this-line
-  )
+      (define (make-enumerate lst index)
+        (if (null? lst)
+            nil
+            (cons (list index (car lst)) (make-enumerate (cdr lst) (+ index 1))))
+        )(make-enumerate s 0)
+      )
   ; END PROBLEM 17
 
 ;; Problem 18
@@ -48,8 +52,7 @@
              (define? expr))
          (let ((form   (car expr))
                (params (cadr expr))
-               (body   (cddr expr)))
-           ; BEGIN PROBLEM 19
+               (body   (cddr expr))) ; BEGIN PROBLEM 19
            'replace-this-line
            ; END PROBLEM 19
            ))
