@@ -21,7 +21,17 @@
 
 (define (zip pairs)
   ; BEGIN PROBLEM 18
-  'replace-this-line
+    (define (zipped-tail pairs lst)
+             (if (null? pairs)
+                 lst
+                 (zipped-tail (cdr pairs)
+                 (list
+                (append (car lst) (list (car (car pairs))))
+                (append (car (cdr lst)) (cdr (car pairs)))             
+                    )
+                )
+             )
+         )(zipped-tail pairs '(() ()))
   )
   ; END PROBLEM 18
 
