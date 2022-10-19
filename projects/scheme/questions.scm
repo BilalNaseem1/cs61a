@@ -50,12 +50,12 @@
 (define (let-to-lambda expr)
   (cond ((atom? expr)
          ; BEGIN PROBLEM 19
-         'replace-this-line
+         expr
          ; END PROBLEM 19
          )
         ((quoted? expr)
          ; BEGIN PROBLEM 19
-         'replace-this-line
+         expr
          ; END PROBLEM 19
          )
         ((or (lambda? expr)
@@ -63,18 +63,34 @@
          (let ((form   (car expr))
                (params (cadr expr))
                (body   (cddr expr))) ; BEGIN PROBLEM 19
-           'replace-this-line
+           (append `(,(let-to-lambda form) ,(map let-to-lambda params)) (let-to-lambda body))
            ; END PROBLEM 19
            ))
         ((let? expr)
          (let ((values (cadr expr))
-               (body   (cddr expr)))
+               (body   (car(cddr expr))))
            ; BEGIN PROBLEM 19
            'replace-this-line
+           (define zipped-vals (zip values))
+           (define params (car zipped-vals))
+           (define args (car (cdr zipped-vals)))
+           
+           (append `((lambda ,( map let-to-lambda params)
+            ,(let-to-lambda body)
+         
            ; END PROBLEM 19
-           ))
+           )) (let-to-lambda args))
+       ))
         (else
          ; BEGIN PROBLEM 19
-         'replace-this-line
+         (map let-to-lambda expr)
          ; END PROBLEM 19
          )))
+(define first-let '(let ((a 1) (b 2)) (+ a b)))
+
+(define first-lambda '(lambda (let a b) (+ let a b)))
+
+(define second-let '(let ((a (let ((a 2)) a))
+                 (b 2))
+                (+ a b)))
+
