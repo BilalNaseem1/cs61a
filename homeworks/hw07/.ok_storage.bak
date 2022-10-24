@@ -1,3 +1,4 @@
 'multiples_3-correct', (0, 70)
 'rle-correct', (512, 70)
 'small-correct', (1024, 70)
+'parent-correct', (1536, 70)
