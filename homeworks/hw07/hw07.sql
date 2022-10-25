@@ -51,4 +51,7 @@ CREATE TABLE sentences AS
 
 -- Total size for each fur type where all of the heights differ by no more than 30% from the average height
 CREATE TABLE low_variance AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+  SELECT fur AS fur, SUM(height) AS total_height
+  FROM dogs
+  GROUP BY fur
+  HAVING height < (AVG(height) + AVG(height) * 0.3) AND height > (AVG(height) - AVG(height) * 0.3); 
