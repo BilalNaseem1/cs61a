@@ -29,7 +29,7 @@ CREATE TABLE sizes AS
 
 -- The size of each dog
 CREATE TABLE size_of_dogs AS
-  SELECT dogs.name, sizes.size FROM dogs JOIN sizes WHERE dogs.height > sizes.min AND  dogs.height <= sizes.max;
+  SELECT dogs.name AS name, sizes.size AS size FROM dogs JOIN sizes WHERE dogs.height > sizes.min AND  dogs.height <= sizes.max;
 
 -- All dogs with parents ordered by decreasing height of their parent
 CREATE TABLE by_parent_height AS
@@ -37,11 +37,17 @@ CREATE TABLE by_parent_height AS
 
 -- Filling out this helper table is optional
 CREATE TABLE siblings AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
-
+  SELECT DISTINCT 
+  CASE WHEN p1.child > p2.child THEN p2.child ELSE p1.child END as sibling1,
+  CASE WHEN p1.child < p2.child THEN p2.child ELSE p1.child END as sibling2
+  FROM parents p1 JOIN parents p2 WHERE p1.parent = p2.parent AND p1.child != p2.child; 
 -- Sentences about siblings that are the same size
 CREATE TABLE sentences AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+  SELECT siblings.sibling1 || ' and ' || siblings.sibling2 || ' are ' || s1.size || ' siblings'
+  FROM siblings
+  JOIN size_of_dogs AS s1 ON siblings.sibling1 = s1.name
+  JOIN size_of_dogs AS s2 ON siblings.sibling2 = s2.name
+  WHERE s1.size = s2.size;
 
 -- Total size for each fur type where all of the heights differ by no more than 30% from the average height
 CREATE TABLE low_variance AS

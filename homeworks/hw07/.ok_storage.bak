@@ -2,3 +2,4 @@
 'rle-correct', (512, 70)
 'small-correct', (1024, 70)
 'parent-correct', (1536, 70)
+'size-correct', (2048, 70)
