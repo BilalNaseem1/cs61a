@@ -110,7 +110,29 @@ def num_splits(s, d):
     12
     """
     "*** YOUR CODE HERE ***"
+    ordered_s = list(set(s))
+    target_d = sum(ordered_s) - d    
 
+    if target_d % 2 == 1:
+        return 0
+
+    
+    def helper(s2, rest_sum):
+        print("DEBUG: ", s2, rest_sum)
+        if len(s2) == 0 and abs(rest_sum) == d:
+            print("KOKOT")
+            return 1
+        elif len(s2) == 0:
+            return 0
+        else:
+            last = s2.pop()
+            rest = list(s2)
+
+            return helper(rest, rest_sum - last) + helper(rest, rest_sum + last) 
+
+
+    return helper(ordered_s, 0)
+    
 def insert(link, value, index):
     """Insert a value into a Link at the given index.
 
@@ -127,6 +149,33 @@ def insert(link, value, index):
     IndexError
     """
     "*** YOUR CODE HERE ***"
+
+    if index == 0:
+        old_first = link.first
+        link.first = value
+
+        new_link = Link(old_first)
+        new_link.rest = link.rest
+
+        link.rest = new_link
+
+    i = 1 
+    
+    while i <= index: 
+        if link.rest is Link.empty:
+            raise IndexError
+
+        if i == index:
+            new_link = Link(value)
+            new_link.rest = link.rest
+            link.rest = new_link
+
+        i += 1
+        link = link.rest
+    
+
+
+
 
 # Link CLass
 class Link:

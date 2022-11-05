@@ -1,2 +1,3 @@
 'prune_small-correct', (0, 70)
 'compose-all-correct', (512, 70)
+'insert-correct', (1024, 70)
