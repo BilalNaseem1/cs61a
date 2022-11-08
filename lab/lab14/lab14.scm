@@ -11,15 +11,22 @@
       )
 )
 
+(define (contains? lst s)
+    (cond
+        ((null? lst) #f)
+        ((eq? (car lst) s) #t)
+        (else (contains? (cdr lst) s))
+        )
+    )
+
+
 (define (has-cycle? s)
   (define (pair-tracker seen-so-far curr)
-    (cond (_________________ ____________)
-          (_________________ ____________)
-          (else _________________________))
-    )
-  ______________________________
+    (cond ((null? curr) #f)
+          ((contains? seen-so-far curr) #t)
+          ;we basically create a list of pointers
+          (else (pair-tracker (append seen-so-far (list curr)) (cdr-stream curr)))
+    ))
+  (pair-tracker (list s)  (cdr-stream s))
 )
 
-(define (contains? lst s)
-  'YOUR-CODE-HERE
-)
