@@ -162,10 +162,8 @@ def num_sevens(n):
     True
     """
     "*** YOUR CODE HERE ***"
-    if n < 10:
-        return int(n == 7)
-    else:
-        return int(n % 10 == 7) + num_sevens(n // 10)
+    return int(n == 7) if n < 10 else int(n % 10 == 7) + num_sevens(n // 10)
+
 def pingpong(n):
     """Return the nth element of the ping-pong sequence.
 
