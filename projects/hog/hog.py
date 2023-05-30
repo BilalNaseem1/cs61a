@@ -55,14 +55,13 @@ def free_bacon(score):
     if score <= FREE_POINTS_MAX:
         return FREE_POINTS_MAX
     
-    digits = str(score)
-    first_digit = digits[0] 
-    second_digit = digits[1]
+    first_digit = score // 10;
+    second_digit = score % 10;
 
-    if int(first_digit) < int(second_digit):
-        return FREE_POINTS_MAX - int(first_digit)
+    if first_digit < second_digit:
+        return FREE_POINTS_MAX - first_digit
     else:
-        return FREE_POINTS_MAX - int(second_digit)
+        return FREE_POINTS_MAX - second_digit
     # END PROBLEM 2
 
 
