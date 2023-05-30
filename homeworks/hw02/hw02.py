@@ -138,10 +138,8 @@ def make_repeater(f, n):
     5
     """
     "*** YOUR CODE HERE ***" 
-    if n == 0:
-        return lambda x: x
-    else:
-        return compose1(f, make_repeater(f, n - 1))
+    return (lambda x: x) if n == 0 else compose1(f, make_repeater(f, n - 1))
+
 
 def num_sevens(n):
     """Returns the number of times 7 appears as a digit of n.
