@@ -169,6 +169,7 @@ def insert(link, value, index):
             new_link = Link(value)
             new_link.rest = link.rest
             link.rest = new_link
+            break
 
         i += 1
         link = link.rest
