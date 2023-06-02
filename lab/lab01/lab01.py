@@ -24,13 +24,7 @@ def sum_digits(n):
     6
     """
     "*** YOUR CODE HERE ***"
-    if n <= 0 or not isinstance(n, int):
-        return 0
-
-    sum = 0
-    string_n = str(n)
-    
-    for digit in string_n:
-       sum += int(digit)
-
-    return sum
+    if n < 10:
+        return n
+    last_digit = n % 10
+    return last_digit + sum_digits(n // 10)
