@@ -1,6 +1,5 @@
 *.zip
 .zip
-*.ipynb*
 untitled
 .vscode*
 curry.py
